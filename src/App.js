@@ -76,9 +76,9 @@ function App() {
       <div className='container'>
         <section className='paper container border margin-large'>
           <h2 className='margin-none'>Lista de tareas</h2>
-          <form id='taskInput' onSubmit={(e) => addTask(e)} className='form-group row col-6 margin-large flex-edges'>
+          <form id='taskInput' onSubmit={(e) => addTask(e)} className='form-group row margin-large flex-edges'>
             <input className='col col-9' onChange={(e) => handleChange(e)} value={ input } type="text" placeholder="Añade una tarea.." id="paperInputs1" />
-            <button className='col col-2'>Añadir</button>
+            <button className='col'>Añadir</button>
             { displayAlert && <p className='col-12 margin-left-small'>La tarea debe tener al menos 3 caracteres</p>}
           </form>
           <section className='margin-top-large'>
