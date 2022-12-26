@@ -1,18 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import './paper.css';
 
 function App() {
-  const [ tasks, setTasks ] = useState([])
+  const handleLocalStorage = ( action ) => {
+    if (action === 'save'){
+      localStorage.setItem('tasks', JSON.stringify(tasks))
+    }
+    if (action === 'load'){
+      const loadedTasks = JSON.parse(localStorage.getItem('tasks'))
+      return loadedTasks ? loadedTasks : []
+    }
+  }
+
+  const [ tasks, setTasks ] = useState(handleLocalStorage('load'))
   const [ input, setInput ] = useState('')
   const [ filterOptions, setFilterOptions ] = useState('')
   const [ displayAlert, setDisplayAlert ] = useState(false)
 
-  const handleChange = (e) => {
+  useEffect(() => {
+    handleLocalStorage('save')
+  }, [tasks])
+  
+
+  const handleChange = ( e ) => {
     setInput(e.target.value)
   }
 
-  const addTask = (e) => {
+  const addTask = ( e ) => {
     e.preventDefault();
     if (input.length < 3){
       setInput('')
@@ -32,19 +47,19 @@ function App() {
     if (displayAlert) setDisplayAlert(false)
   }
 
-  const changeTaskStatus = (id) => {
+  const changeTaskStatus = ( id ) => {
     const aux = [...tasks]
     const taskId = aux.findIndex( t => t.id === id)
     aux[taskId].status = aux[taskId].status === 'completed' ? 'incompleted' : 'completed'
     setTasks(aux)
   }
 
-  const eraseTask = (id) => {
+  const eraseTask = ( id ) => {
     let filteredTasks = tasks.filter( t => t.id !== id)
     setTasks([...filteredTasks])
   }
 
-  const task = (data) => {
+  const task = ( data ) => {
     const { id, status, task, time } = data
     return(
       <article key={id} className='margin-top row flex-center'>
