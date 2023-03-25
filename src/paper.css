@@ -105,6 +105,14 @@ html.dark {
   --shadow-color-hover: rgba(0, 0, 0, 0.3);
   --primary-inverse: #41403e;
 }
+html {
+  overflow-x: hidden;
+}
+
+#root{
+  min-height: 80vh;
+  margin-top: 20vh;
+}
 
 /* stylelint-disable */
 /* stylelint-enable */
@@ -233,6 +241,11 @@ header,
 nav,
 section {
   display: block;
+}
+
+header{
+  width: 100%;
+  flex-wrap: nowrap !important;
 }
 
 h1 {
@@ -539,7 +552,7 @@ hr::after {
 
 .row {
   display: flex;
-  flex-flow: row wrap;
+  flex-wrap: wrap;
   margin-bottom: 1rem;
   margin-left: auto;
   margin-right: auto;
@@ -568,12 +581,6 @@ hr::after {
 
 .col {
   padding: 1rem;
-}
-@media only screen and (max-width: 768px) {
-  .col {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
 }
 
 .col-fill {
@@ -915,6 +922,10 @@ hr::after {
   }
 }
 
+#taskInput{
+  flex-wrap: nowrap;
+}
+
 /* Content styling */
 code {
   color: #41403e;
@@ -1004,11 +1015,11 @@ h1 {
 }
 
 h2 {
-  font-size: 3rem;
+  font-size: clamp(2rem, 5vw, 3rem);
 }
 
 h3 {
-  font-size: 2rem;
+  font-size: clamp(1.25rem, 5vw, 2rem);
 }
 
 h4 {
@@ -1532,9 +1543,6 @@ article button:not(:first-of-type) {
   article button:not(:first-of-type) {
     margin-left: 0;
   }
-}
-article p {
-  line-height: 1.6;
 }
 
 .badge {
@@ -3315,4 +3323,35 @@ nav .collapsible > label {
 nav .collapsible > label {
     display: block;
   }
+}
+
+@media only screen and (max-width: 768px) {
+  .container{
+    width: 95%;
+    margin-left: 5%;
+  }
+  .col {
+    max-width: 100%;
+  }
+  .margin-large{
+    margin: .5rem 0;
+  }
+  #paperInputs1{
+    padding: .5em 1em;
+    height: 58px;
+  }
+  .taskHeader{
+    margin-bottom: .25rem;
+  }
+  .margin-top-large{
+    margin-top: .5rem;
+  }
+}
+
+.taskHeader{
+  justify-content: center;
+}
+
+p{
+  font-size: clamp(.6rem, 10vw, .8rem) !important;
 }

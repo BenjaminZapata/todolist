@@ -17,11 +17,19 @@ function App() {
   const [ input, setInput ] = useState('')
   const [ filterOptions, setFilterOptions ] = useState('')
   const [ displayAlert, setDisplayAlert ] = useState(false)
+  const [ matches, setMatches ] = useState(
+    window.matchMedia("(min-width: 650px)").matches
+  )
 
   useEffect(() => {
     handleLocalStorage('save')
   }, [tasks])
   
+  useEffect(() => {
+    window
+    .matchMedia("(min-width: 650px)")
+    .addEventListener('change', e => setMatches( e.matches ));
+  }, []);
 
   const handleChange = ( e ) => {
     setInput(e.target.value)
@@ -63,8 +71,10 @@ function App() {
     const { id, status, task, time } = data
     return(
       <article key={id} className='margin-top row flex-center'>
-        <button className={`col col-9 text-left margin-small ${status === 'completed' ? "background-primary text-line-through" : ""}`} onClick={() => changeTaskStatus(id)} popover-left={status === 'completed' ? 'Completada' : 'No completada'}>{task}</button>
-        <button className='col margin-small' onClick={() => eraseTask(id)} popover-right='Eliminar'>X</button>
+        <header className='row taskHeader'>
+          <button className={`col col-9 text-left margin-small ${status === 'completed' ? "background-primary text-line-through" : ""}`} onClick={() => changeTaskStatus(id)} popover-left={matches ? status === 'completed' ? 'Completada' : 'No completada' : null} popover-top={ !matches ? status === 'completed' ? 'Completada' : 'No completada' : null}>{task}</button>
+          <button className='col margin-small' onClick={() => eraseTask(id)} popover-right={ matches ? 'Eliminar' : null} popover-top={ !matches ? 'Eliminar' : null}>X</button>
+        </header>
         <footer className='col-10'>
           <p className='margin-bottom-none margin-top-small'>{time}</p>
         </footer>
@@ -73,7 +83,7 @@ function App() {
 
   return (
     <>
-      <div className='container'>
+      <div className='container app'>
         <section className='paper container border margin-large'>
           <h2 className='margin-none'>Lista de tareas</h2>
           <form id='taskInput' onSubmit={(e) => addTask(e)} className='form-group row margin-large flex-edges'>
