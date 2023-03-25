@@ -18,7 +18,7 @@ function App() {
   const [ filterOptions, setFilterOptions ] = useState('')
   const [ displayAlert, setDisplayAlert ] = useState(false)
   const [ matches, setMatches ] = useState(
-    window.matchMedia("(min-width: 650px)").matches
+    window.matchMedia("(min-width: 768px)").matches
   )
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function App() {
   
   useEffect(() => {
     window
-    .matchMedia("(min-width: 650px)")
+    .matchMedia("(min-width: 768px)")
     .addEventListener('change', e => setMatches( e.matches ));
   }, []);
 
@@ -85,7 +85,7 @@ function App() {
     <>
       <div className='container app'>
         <section className='paper container border margin-large'>
-          <h2 className='margin-none'>Lista de tareas</h2>
+          <h2 className={ !matches ? 'margin-bottom-large margin-top-small' : 'margin-none'}>Lista de tareas</h2>
           <form id='taskInput' onSubmit={(e) => addTask(e)} className='form-group row margin-large flex-edges'>
             <input className='col col-9' onChange={(e) => handleChange(e)} value={ input } type="text" placeholder="Añade una tarea.." id="paperInputs1" />
             <button className='col'>Añadir</button>
